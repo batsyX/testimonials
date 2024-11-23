@@ -3,7 +3,6 @@ import close from "@/public/close.png"
 import Image from 'next/image'
 import SpaceLogoUploader from './LogoUploader'
 import { Commet } from 'react-loading-indicators'
-import axios from 'axios'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
@@ -52,9 +51,15 @@ const Dialog = ({onClick,handleDialogClose}) => {
     setLoading(true);
     
     try {
-      const res = await axios.post('/api/space', {userEmail:userEmail,spaceName:spaceName,header: header, subMessage: subMessage, logo: currLogo});
-      // console.log(res);
-      if(res.data.error==='Space name already exists'){
+      const res = await fetch('/api/space',{
+        method:'POST',
+        headers:{
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({userEmail:userEmail,spaceName:spaceName,header: header, subMessage: subMessage, logo: currLogo})
+      } );
+      const body =await res.json();
+      if(body.error==='Space name already exists'){
         toast.error('Space name already exists');
         setLoading(false);
         return;
