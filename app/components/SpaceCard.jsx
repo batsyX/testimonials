@@ -113,7 +113,7 @@ const SpaceCard = ({spaceName,spaceLogo,onDelete}) => {
                             <h2 >Edit</h2>
                         </DropdownMenuItem>
                         <DropdownMenuItem className='text-gray-400 cursor-pointer' onClick={()=>{
-                            copyToClipboard(`http://localhost:3000/space/${spaceName}`)
+                            copyToClipboard(`${process.env.NEXT_PUBLIC_URL}/space/${spaceName}`)
                         }}>
                             <h2 >Get link</h2>
                         </DropdownMenuItem>
